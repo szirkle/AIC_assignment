@@ -208,7 +208,6 @@ mod4&lt;-glm(use~height+slope+decay, family = binomial(link=&quot;logit&quot;), 
 ## mod2 13.9167142
 ## mod3  0.0000000
 ## mod4  1.9873070</code></pre>
-<pre class="r"><code>delAIC &lt;- (AIC(mod1, mod2, mod3, mod4)-min(AIC(mod1, mod2, mod3, mod4)[2]))[2]</code></pre>
 <pre class="r"><code>relLik &lt;- exp(-0.5 * delAIC)
 aicweight &lt;- relLik/sum(relLik)
 aicweight</code></pre>
