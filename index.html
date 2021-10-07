@@ -417,11 +417,11 @@ out.put1</code></pre>
 ## Models ranked by AICc(x)</code></pre>
 <pre class="r"><code>names(sel.table1)[1] = &quot;K&quot;
 sel.table1</code></pre>
-<pre><code>##      K  logLik   AICc delta weight
-## mod1 2 -115.87 235.79 0.000  0.462
-## mod2 3 -115.66 237.42 1.636  0.204
-## mod4 3 -115.85 237.81 2.021  0.168
-## mod3 3 -115.86 237.84 2.049  0.166</code></pre>
+<pre><code>##    K  logLik    AICc delta weight
+## m3 5 -518.27 1046.98 0.000  0.337
+## m1 6 -517.28 1047.17 0.198  0.306
+## m4 5 -518.56 1047.56 0.587  0.252
+## m2 7 -517.24 1049.30 2.324  0.106</code></pre>
 <p>This model ranking still has <code>m3</code> with the top weight.</p>
 <pre class="r"><code># model selection table; sorted by BIC
 model.sel(m1,m2,m3,m4, rank = BIC)</code></pre>
@@ -452,10 +452,11 @@ model.sel(m1,m2,m3,m4, rank = CAICF) </code></pre>
 ## m1 1100.1 16.87  0.000
 ## m2 1110.9 27.68  0.000
 ## Models ranked by CAICF(x)</code></pre>
-<pre class="r"><code>AIC(m1,m3)</code></pre>
+<pre class="r"><code>AIC(m1,m3,m4)</code></pre>
 <pre><code>##    df      AIC
 ## m1  6 1046.556
-## m3  5 1046.538</code></pre>
+## m3  5 1046.538
+## m4  5 1047.125</code></pre>
 <pre class="r"><code>importance(out.put1)</code></pre>
 <pre><code>##                      TreeSpeciesRichness BamboAbun DBH  Canopy TreeHigh
 ## Sum of weights:      1.00                0.75      0.75 0.66   0.36    
