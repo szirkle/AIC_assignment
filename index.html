@@ -165,7 +165,7 @@ pre code {
 
 <h1 class="title toc-ignore">AIC Model Selection</h1>
 <h4 class="author">Sarah Zirkle</h4>
-<h4 class="date">October 1, 2021</h4>
+<h4 class="date">October 7, 2021</h4>
 
 </div>
 
@@ -186,7 +186,8 @@ pre code {
 <p>Seems ok but...... dbh and height look awfully correlated so lets check.</p>
 <pre class="r"><code>cor(bats$height, bats$dbh)</code></pre>
 <pre><code>## [1] 0.6600357</code></pre>
-<p>They have a pretty high correlation. Therefore, lets not include both in the same model. / / Lets look at the deviance.</p>
+<p>They have a pretty high correlation. Therefore, lets not include both in the same model.</p>
+<p>Lets look at the deviance.</p>
 <pre class="r"><code>model_bat1 &lt;- glm(use ~ dbh + decay + canopy + height + slope, family = binomial(link=&quot;logit&quot;), data=bats)
 anova (model_bat1) </code></pre>
 <pre><code>## Analysis of Deviance Table
@@ -205,6 +206,7 @@ anova (model_bat1) </code></pre>
 ## canopy  1   0.7103       216     227.01
 ## height  1   1.9460       215     225.07
 ## slope   1   0.5405       214     224.53</code></pre>
+<p>That DBH though... high deviance.</p>
 <pre class="r"><code>performance::check_collinearity(model_bat1)</code></pre>
 <pre><code>## # Check for Multicollinearity
 ## 
@@ -386,6 +388,7 @@ out.put1</code></pre>
 ## m4 1047.6  0.59  0.252
 ## m2 1049.3  2.32  0.106
 ## Models ranked by AICc(x)</code></pre>
+<p>These are the models ranked. Looks like <code>m3</code>, containing an intercept (Int), DBH (diameter of breast height), Bamboo Abundance, and Tree Species Richness is best with a weight of 0.337. It is 0.337/0.204 = 1.10 times more likely to be the best explanation (hypothesis) for variation in habitat use.</p>
 <pre class="r"><code>subset(out.put1, delta &lt;5)</code></pre>
 <pre><code>## Model selection table 
 ##    (Intrc)   BmbAb   Canpy       DBH   TrSpR    TrHgh             family df   logLik
@@ -419,6 +422,7 @@ sel.table1</code></pre>
 ## mod2 3 -115.66 237.42 1.636  0.204
 ## mod4 3 -115.85 237.81 2.021  0.168
 ## mod3 3 -115.86 237.84 2.049  0.166</code></pre>
+<p>This model ranking still has <code>m3</code> with the top weight.</p>
 <pre class="r"><code># model selection table; sorted by BIC
 model.sel(m1,m2,m3,m4, rank = BIC)</code></pre>
 <pre><code>## Model selection table 
@@ -433,6 +437,7 @@ model.sel(m1,m2,m3,m4, rank = BIC)</code></pre>
 ## m1 1064.3  2.98  0.113
 ## m2 1069.2  7.86  0.010
 ## Models ranked by BIC(x)</code></pre>
+<p>On the other hand.... <code>m4</code> (intercept, canopy, and tree species) now has the higher weight.</p>
 <pre class="r"><code>#consistent AIC with Fishers information matrix
 model.sel(m1,m2,m3,m4, rank = CAICF) </code></pre>
 <pre><code>## Model selection table 
@@ -447,10 +452,10 @@ model.sel(m1,m2,m3,m4, rank = CAICF) </code></pre>
 ## m1 1100.1 16.87  0.000
 ## m2 1110.9 27.68  0.000
 ## Models ranked by CAICF(x)</code></pre>
-<pre class="r"><code>AIC(mod1,mod3)</code></pre>
-<pre><code>##      df      AIC
-## mod1  2 235.7325
-## mod3  3 237.7252</code></pre>
+<pre class="r"><code>AIC(m1,m3)</code></pre>
+<pre><code>##    df      AIC
+## m1  6 1046.556
+## m3  5 1046.538</code></pre>
 <pre class="r"><code>importance(out.put1)</code></pre>
 <pre><code>##                      TreeSpeciesRichness BamboAbun DBH  Canopy TreeHigh
 ## Sum of weights:      1.00                0.75      0.75 0.66   0.36    
